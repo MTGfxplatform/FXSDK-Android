@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AlphaBdSDKAnd"
 include ':app'
+include ':common'
+include ':event'
+include ':core'
