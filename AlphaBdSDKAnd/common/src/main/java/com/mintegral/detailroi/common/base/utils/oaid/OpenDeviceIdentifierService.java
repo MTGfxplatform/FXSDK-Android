@@ -11,7 +11,7 @@ public interface OpenDeviceIdentifierService extends IInterface {
 
     boolean isOaidTrackLimited() throws RemoteException;
 
-    public abstract static class Stub extends Binder implements com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService {
+    public abstract static class Stub extends Binder implements OpenDeviceIdentifierService {
         private static final String DESCRIPTOR = "com.uodis.opendevice.aidl.OpenDeviceIdentifierService";
         static final int TRANSACTION_getOaid = 1;
         static final int TRANSACTION_isOaidTrackLimited = 2;
@@ -20,12 +20,12 @@ public interface OpenDeviceIdentifierService extends IInterface {
             this.attachInterface(this, "com.uodis.opendevice.aidl.OpenDeviceIdentifierService");
         }
 
-        public static com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService asInterface(IBinder obj) {
+        public static OpenDeviceIdentifierService asInterface(IBinder obj) {
             if (obj == null) {
                 return null;
             } else {
                 IInterface iin = obj.queryLocalInterface("com.uodis.opendevice.aidl.OpenDeviceIdentifierService");
-                return (com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService)(iin != null && iin instanceof com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService ? (com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService)iin : new com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService.Stub.Proxy(obj));
+                return (OpenDeviceIdentifierService)(iin != null && iin instanceof OpenDeviceIdentifierService ? (OpenDeviceIdentifierService)iin : new OpenDeviceIdentifierService.Stub.Proxy(obj));
             }
         }
 
@@ -55,7 +55,7 @@ public interface OpenDeviceIdentifierService extends IInterface {
             }
         }
 
-        private static class Proxy implements com.mbridge.msdk.optimize.oaid.OpenDeviceIdentifierService {
+        private static class Proxy implements OpenDeviceIdentifierService {
             private IBinder mRemote;
 
             Proxy(IBinder remote) {

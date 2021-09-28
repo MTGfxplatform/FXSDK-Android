@@ -10,8 +10,19 @@ public class BDIdsManager {
 
     public static void updateSelfId(){
         GetRequest getRequest = new GetRequest();
-        getRequest.url(NetworkConstant.BASE_HOST);
+        getRequest.url(NetworkConstant.SETTING_URL);
         Request request = getRequest.getRequest();
-        NetworkHelper.getInstance().get(request,new BaseCallBack());
+        NetworkHelper.getInstance().get(request,new BaseCallBack(){
+
+            @Override
+            protected void onFailed(String msg) {
+
+            }
+
+            @Override
+            public void onSucceed(String responseStr) {
+
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package com.mintegral.detailroi.common.network.request;
 
+import static com.mintegral.detailroi.common.network.NetworkConstant.REPORT_URL;
+
 import com.mbridge.msdk.thrid.okhttp.Request;
 import com.mbridge.msdk.thrid.okhttp.RequestBody;
 
@@ -8,6 +10,7 @@ public class PostRequest extends MyRequest{
     public PostRequest(){
         builder = new Request.Builder();
         addCommonHeader(builder);
+        url(REPORT_URL);
     }
 
     public PostRequest url(String url){
