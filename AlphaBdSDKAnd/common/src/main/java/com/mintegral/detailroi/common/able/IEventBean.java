@@ -1,5 +1,13 @@
 package com.mintegral.detailroi.common.able;
 
-public abstract interface IEventBean {
-    public abstract String toJsonTypeString();
+import androidx.annotation.NonNull;
+
+import org.json.JSONObject;
+
+public  class IEventBean {
+    public JSONObject jsonObject = new JSONObject();
+    @NonNull
+    public String toString(){
+        return jsonObject.toString();
+    }
 }

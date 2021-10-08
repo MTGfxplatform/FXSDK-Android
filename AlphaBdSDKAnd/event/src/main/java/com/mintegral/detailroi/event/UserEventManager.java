@@ -23,7 +23,7 @@ public class UserEventManager implements IUserEvent {
     }
 
     public void sendIAPEvent(IAPEventBean iapEventBean){
-        EventCommonParams eventCommonParams = new EventCommonParams("IAP",System.currentTimeMillis());
+        EventCommonParams eventCommonParams = new EventCommonParams("IAP",System.currentTimeMillis(),0);
         EventBean eventBean = new EventBean();
         eventBean.setEventBussBean(iapEventBean);
         eventBean.setEventCommonParams(eventCommonParams);

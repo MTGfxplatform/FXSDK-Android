@@ -5,7 +5,10 @@ import androidx.annotation.NonNull;
 import com.mintegral.detailroi.common.able.IEventBussBean;
 import com.mintegral.detailroi.common.base.NoProguard;
 
-public class IAPEventBean implements IEventBussBean,NoProguard {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class IAPEventBean extends IEventBussBean implements NoProguard {
 
     private String productName;
     private int productNum;
@@ -13,12 +16,19 @@ public class IAPEventBean implements IEventBussBean,NoProguard {
     private String currency;
     private String payStatus;
 
+
+
     public String getProductName() {
         return productName;
     }
 
     public void setProductName(String productName) {
         this.productName = productName;
+        try {
+            jsonObject.put("productName",productName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getProductNum() {
@@ -27,6 +37,11 @@ public class IAPEventBean implements IEventBussBean,NoProguard {
 
     public void setProductNum(int productNum) {
         this.productNum = productNum;
+        try {
+            jsonObject.put("productNum",productNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public float getAmount() {
@@ -35,6 +50,11 @@ public class IAPEventBean implements IEventBussBean,NoProguard {
 
     public void setAmount(float amount) {
         this.amount = amount;
+        try {
+            jsonObject.put("amount",amount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getCurrency() {
@@ -43,6 +63,11 @@ public class IAPEventBean implements IEventBussBean,NoProguard {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+        try {
+            jsonObject.put("currency",currency);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getPayStatus() {
@@ -51,28 +76,12 @@ public class IAPEventBean implements IEventBussBean,NoProguard {
 
     public void setPayStatus(String payStatus) {
         this.payStatus = payStatus;
+        try {
+            jsonObject.put("payStatus",payStatus);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "IAPEventBean{" +
-                "productName='" + productName + '\'' +
-                ", productNum=" + productNum +
-                ", amount=" + amount +
-                ", currency='" + currency + '\'' +
-                ", payStatus='" + payStatus + '\'' +
-                '}';
-    }
-    @Override
-    public String toJsonTypeString() {
-        return "{" +
-                "\"productName\":'" + productName + '\'' +
-                ", \"productNum\":" + productNum +
-                ", \"amount\":" + amount +
-                ", \"currency\":'" + currency + '\'' +
-                ", \"payStatus\":'" + payStatus + '\'' +
-                '}';
-    }
 }

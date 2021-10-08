@@ -9,16 +9,20 @@ import com.mintegral.detailroi.common.bean.EventBean;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReportManager {
 
-    private Handler handler ;
+    private final Handler handler ;
+    private static long logCount = 0;
     private ReportManager(){
         EventFlowThread eventFlowThread = new EventFlowThread("report_flow_thread");
         eventFlowThread.start();
         handler = new MyEventFlowHandler(eventFlowThread.getLooper());
     }
     private static class Holder{
-        private static ReportManager instance = new ReportManager();
+        private static final ReportManager instance = new ReportManager();
     }
 
     public static ReportManager getInstance() {
@@ -29,9 +33,10 @@ public class ReportManager {
         Message msg = handler.obtainMessage();
         msg.what =MyEventFlowHandler.INSERT_DB_THEN_REPORT;
         JSONArray jsonArray = new JSONArray();
-        jsonArray.put(eventBean.toJsonTypeString());
-        jsonArray.put(eventBean.toJsonTypeString());
-        msg.obj = jsonArray.toString();
+        eventBean.setLogCount(logCount);
+        logCount++;
+        jsonArray.put(eventBean.jsonObject);
+        msg.obj = jsonArray;
         handler.sendMessage(msg);
     }
 
