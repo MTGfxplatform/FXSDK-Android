@@ -5,6 +5,7 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
+import com.mintegral.detailroi.common.base.utils.CommonTool;
 import com.mintegral.detailroi.common.bean.EventBean;
 
 import org.json.JSONArray;
@@ -16,6 +17,7 @@ public class ReportManager {
 
     private final Handler handler ;
     private static long logCount = 0;
+    private static int logCountDayForInt;
     private ReportManager(){
         EventFlowThread eventFlowThread = new EventFlowThread("report_flow_thread");
         eventFlowThread.start();
@@ -30,6 +32,10 @@ public class ReportManager {
     }
 
     public void sendRealTimeEvent(EventBean eventBean){
+        if(CommonTool.isNeedResetLogCount(logCountDayForInt)){
+            logCountDayForInt = CommonTool.getCurrentDayForInt();
+            logCount=0;
+        }
         Message msg = handler.obtainMessage();
         msg.what =MyEventFlowHandler.INSERT_DB_THEN_REPORT;
         JSONArray jsonArray = new JSONArray();
