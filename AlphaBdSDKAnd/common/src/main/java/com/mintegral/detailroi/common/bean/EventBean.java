@@ -23,13 +23,16 @@ public class EventBean extends IEventBean implements NoProguard {
         jsonObject = eventCommonParams.jsonObject;
 
     }
-
-    public void setEventBussBean(IEventBussBean eventBussBean) {
+    public void setCustomEventJsonObject(JSONObject extJsonObject){
         try {
-            jsonObject.put("ext_params",eventBussBean.jsonObject);
+            jsonObject.put("ext_params",extJsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setEventBussBean(IEventBussBean eventBussBean) {
+        setCustomEventJsonObject(eventBussBean.jsonObject);
     }
 
     public void setLogCount(long logCount){

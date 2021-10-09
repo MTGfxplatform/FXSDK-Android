@@ -7,7 +7,7 @@ import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.able.IUserEvent;
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
 import com.mintegral.detailroi.common.ids.BDIdsManager;
-import com.mintegral.detailroi.event.UserEventManager;
+import com.mintegral.detailroi.event.out.UserEventManager;
 import com.mintegral.detailroi.preset.PresetManager;
 
 
@@ -49,7 +49,7 @@ public class AlphaSDKProvider implements AlphaSDK{
     @Override
     public IUserEvent getUserEventManager() {
         try {
-            Class clz = Class.forName("com.mintegral.detailroi.event.UserEventManager");
+            Class clz = Class.forName("com.mintegral.detailroi.event.out.UserEventManager");
             return UserEventManager.getInstance();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

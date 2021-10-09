@@ -26,7 +26,7 @@ public abstract class BaseCallBack implements Callback {
             }else {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    if(jsonObject.getInt("code") != 0){
+                    if(jsonObject.getInt("code") != 200){
                         onFailed(jsonObject.optString("msg"));
                     }else {
                         onSucceed(jsonObject.optJSONObject("data"));

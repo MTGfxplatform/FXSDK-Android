@@ -6,6 +6,7 @@ import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.able.IEventBean;
 import com.mintegral.detailroi.common.base.NoProguard;
 import com.mintegral.detailroi.common.base.utils.SameDeviceTool;
+import com.mintegral.detailroi.common.base.utils.SameMD5;
 import com.mintegral.detailroi.common.ids.SessionIdsManager;
 
 import org.json.JSONException;
@@ -20,7 +21,7 @@ public class EventCommonParams extends  IEventBean implements NoProguard {
 
 
 
-    public EventCommonParams(String event, long time,long duration) {
+    public EventCommonParams(String event, long time) {
         this.event = event;
         this.time = time;
         try {
@@ -36,7 +37,15 @@ public class EventCommonParams extends  IEventBean implements NoProguard {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            jsonObject.put("event_id", Base64.encodeToString(eventJsonObj.toString().getBytes(),Base64.NO_WRAP));
+            jsonObject.put("event_id", SameMD5.getMD5(Base64.encodeToString(eventJsonObj.toString().getBytes(),Base64.NO_WRAP)));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public EventCommonParams(String event, long time,long duration) {
+        this(event,time);
+        try {
             jsonObject.put("duration",duration);
         } catch (JSONException e) {
             e.printStackTrace();

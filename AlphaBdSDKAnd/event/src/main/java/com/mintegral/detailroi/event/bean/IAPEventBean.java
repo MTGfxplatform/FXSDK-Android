@@ -4,41 +4,43 @@ import androidx.annotation.NonNull;
 
 import com.mintegral.detailroi.common.able.IEventBussBean;
 import com.mintegral.detailroi.common.base.NoProguard;
+import com.mintegral.detailroi.event.out.IAPPayStateEnum;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class IAPEventBean extends IEventBussBean implements NoProguard {
 
-    private String productName;
-    private int productNum;
+    private List<IAPItemPair> items;
+    private String transactionId;
     private float amount;
     private String currency;
-    private String payStatus;
+    private IAPPayStateEnum payStatus;
+    private String failReason;
 
 
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProductItems(List<IAPItemPair> items) {
+        this.items = items;
         try {
-            jsonObject.put("productName",productName);
+            JSONArray jsonArray = new JSONArray();
+            for (IAPItemPair p:items) {
+                jsonArray.put(p.jsonObject);
+            }
+            jsonObject.put("items",jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public int getProductNum() {
-        return productNum;
-    }
 
-    public void setProductNum(int productNum) {
-        this.productNum = productNum;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
         try {
-            jsonObject.put("productNum",productNum);
+            jsonObject.put("transaction_id",transactionId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -70,18 +72,23 @@ public class IAPEventBean extends IEventBussBean implements NoProguard {
         }
     }
 
-    public String getPayStatus() {
-        return payStatus;
-    }
 
-    public void setPayStatus(String payStatus) {
+
+    public void setPayStatus(IAPPayStateEnum payStatus) {
         this.payStatus = payStatus;
         try {
-            jsonObject.put("payStatus",payStatus);
+            jsonObject.put("payStatus",payStatus.getState());
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
+        try {
+            jsonObject.put("fail_reason",failReason);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

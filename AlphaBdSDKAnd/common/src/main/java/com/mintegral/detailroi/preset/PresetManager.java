@@ -116,21 +116,21 @@ public class PresetManager implements Application.ActivityLifecycleCallbacks {
 
     private void reportStartEvent(){
         processStartTime = System.currentTimeMillis();
-        EventCommonParams eventCommonParams = new EventCommonParams("$AppStart",System.currentTimeMillis(),0);
+        EventCommonParams eventCommonParams = new EventCommonParams("$AppStart",System.currentTimeMillis());
         EventBean eventBean = new EventBean();
         eventBean.setEventCommonParams(eventCommonParams);
         ReportManager.getInstance().sendRealTimeEvent(eventBean);
     }
     private void reportEndEvent(){
         long duration = System.currentTimeMillis() - processStartTime;
-        EventCommonParams eventCommonParams = new EventCommonParams("$AppEnd",System.currentTimeMillis(),duration);
+        EventCommonParams eventCommonParams = new EventCommonParams("$AppEnd",System.currentTimeMillis(),duration/1000);
         EventBean eventBean = new EventBean();
         eventBean.setEventCommonParams(eventCommonParams);
         ReportManager.getInstance().sendRealTimeEvent(eventBean);
     }
 
     public void reportInstallEvent(){
-        EventCommonParams eventCommonParams = new EventCommonParams("$AppInstall",System.currentTimeMillis(),0);
+        EventCommonParams eventCommonParams = new EventCommonParams("$AppInstall",System.currentTimeMillis());
         EventBean eventBean = new EventBean();
         eventBean.setEventCommonParams(eventCommonParams);
         ReportManager.getInstance().sendRealTimeEvent(eventBean);
