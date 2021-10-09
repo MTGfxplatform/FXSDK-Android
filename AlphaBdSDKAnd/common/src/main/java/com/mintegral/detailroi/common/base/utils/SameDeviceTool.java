@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -67,7 +68,7 @@ public class SameDeviceTool {
     }
 
     public static void setGId(String ad) {
-        b64GID = SameBase64Tool.newBase64Encode(ad);
+        b64GID = Base64.encodeToString(ad.getBytes(),Base64.NO_WRAP);
         acid = ad;
     }
 
@@ -485,6 +486,10 @@ public class SameDeviceTool {
             e.printStackTrace();
         }
         return jsonObject.toString();
+    }
+
+    public static String getBase64DeviceIdsString(){
+        return Base64.encodeToString(getDeviceIdsString().getBytes(),Base64.NO_WRAP|Base64.URL_SAFE);
     }
 
     public static String getMd() {

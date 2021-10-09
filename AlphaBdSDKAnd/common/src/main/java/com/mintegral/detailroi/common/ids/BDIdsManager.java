@@ -2,10 +2,10 @@ package com.mintegral.detailroi.common.ids;
 
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.mbridge.msdk.thrid.okhttp.Request;
 import com.mintegral.detailroi.common.GlobalObject;
-import com.mintegral.detailroi.common.base.utils.SameBase64Tool;
 import com.mintegral.detailroi.common.base.utils.SameDeviceTool;
 import com.mintegral.detailroi.common.base.utils.SharedPreferencesUtils;
 import com.mintegral.detailroi.common.network.NetworkConstant;
@@ -21,7 +21,7 @@ public class BDIdsManager {
 
     public static void updateSelfId(){
         GetRequest getRequest = new GetRequest(NetworkConstant.SETTING_URL);
-        getRequest.addQueryParameter("device_id", SameBase64Tool.newBase64Encode(SameDeviceTool.getDeviceIdsString()));
+        getRequest.addQueryParameter("device_id", SameDeviceTool.getBase64DeviceIdsString());
         getRequest.addQueryParameter("fx_id",getFxId());
         getRequest.addQueryParameter("out",System.currentTimeMillis()+"");
         getRequest.addQueryParameter("upt", SystemClock.elapsedRealtime()+"");

@@ -1,11 +1,10 @@
 package com.mintegral.detailroi.common.bean;
 
+import android.util.Base64;
+
 import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.able.IEventBean;
 import com.mintegral.detailroi.common.base.NoProguard;
-import com.mintegral.detailroi.common.base.SDKConfig;
-import com.mintegral.detailroi.common.base.utils.CommonTool;
-import com.mintegral.detailroi.common.base.utils.SameBase64Tool;
 import com.mintegral.detailroi.common.base.utils.SameDeviceTool;
 import com.mintegral.detailroi.common.ids.SessionIdsManager;
 
@@ -37,7 +36,7 @@ public class EventCommonParams extends  IEventBean implements NoProguard {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            jsonObject.put("event_id", SameBase64Tool.newBase64Encode(eventJsonObj.toString()));
+            jsonObject.put("event_id", Base64.encodeToString(eventJsonObj.toString().getBytes(),Base64.NO_WRAP));
             jsonObject.put("duration",duration);
         } catch (JSONException e) {
             e.printStackTrace();
