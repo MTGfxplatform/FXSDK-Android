@@ -80,7 +80,7 @@ public class MyEventFlowHandler extends Handler {
             }
 
             @Override
-            public void onSucceed(String responseStr) {
+            public void onSucceed(JSONObject responseStr) {
                 deleteDataToDB(eventList);
             }
         });

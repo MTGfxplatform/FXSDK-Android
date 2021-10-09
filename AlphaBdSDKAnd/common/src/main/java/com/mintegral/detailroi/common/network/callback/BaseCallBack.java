@@ -1,8 +1,13 @@
 package com.mintegral.detailroi.common.network.callback;
 
+import android.text.TextUtils;
+
 import com.mbridge.msdk.thrid.okhttp.Call;
 import com.mbridge.msdk.thrid.okhttp.Callback;
 import com.mbridge.msdk.thrid.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -15,13 +20,30 @@ public abstract class BaseCallBack implements Callback {
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         if(response.isSuccessful() && response.body() != null ){
-            onSucceed(response.body().string());
+            String result = response.body().string();
+            if(TextUtils.isEmpty(result)){
+                onFailed("response body is null");
+            }else {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if(jsonObject.getInt("code") != 0){
+                        onFailed(jsonObject.optString("msg"));
+                    }else {
+                        onSucceed(jsonObject.optJSONObject("data"));
+                    }
+                } catch (JSONException e) {
+                    onFailed("response body parse exception" +e.getMessage());
+                    e.printStackTrace();
+                }
+
+            }
+
         }else {
             onFailed(response.message());
         }
     }
 
     protected abstract void onFailed(String msg);
-    public abstract void onSucceed(String responseStr);
+    public abstract void onSucceed(JSONObject responseJsonObject);
 
 }

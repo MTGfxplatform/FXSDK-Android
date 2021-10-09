@@ -6,6 +6,7 @@ import com.mintegral.detailroi.common.base.NoProguard;
 import com.mintegral.detailroi.common.base.SDKConfig;
 import com.mintegral.detailroi.common.base.utils.CommonTool;
 import com.mintegral.detailroi.common.base.utils.SameDeviceTool;
+import com.mintegral.detailroi.common.ids.BDIdsManager;
 import com.mintegral.detailroi.common.ids.SessionIdsManager;
 
 import org.json.JSONException;
@@ -17,7 +18,7 @@ public class EventBaseParams extends IEventBean implements NoProguard {
     }
     private void init(){
         try {
-            jsonObject.put("fx_id",GlobalObject.appId);
+            jsonObject.put("fx_id", BDIdsManager.getFxId());
             jsonObject.put("sdk_version", SDKConfig.SDK_VERSION);
             jsonObject.put("app_id",GlobalObject.appId);
             jsonObject.put("app_name", SameDeviceTool.getAN(GlobalObject.application));

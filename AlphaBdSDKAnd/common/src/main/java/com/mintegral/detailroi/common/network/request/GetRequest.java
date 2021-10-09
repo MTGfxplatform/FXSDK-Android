@@ -1,17 +1,24 @@
 package com.mintegral.detailroi.common.network.request;
 
+import com.mbridge.msdk.thrid.okhttp.HttpUrl;
 import com.mbridge.msdk.thrid.okhttp.Request;
 
 public class GetRequest extends MyRequest{
     Request.Builder builder;
-    public GetRequest(){
+    HttpUrl.Builder httpBuilder;
+    public GetRequest(String url){
+        url(url);
         builder = new Request.Builder();
         addCommonHeader(builder);
     }
 
     public GetRequest url(String url){
-        builder.url(url);
+        httpBuilder = HttpUrl.parse(url).newBuilder();
         return this;
+    }
+
+    public void addQueryParameter(String name,  String value){
+        httpBuilder.addQueryParameter(name, value);
     }
 
     public GetRequest addHeader(String name, String value){
@@ -25,8 +32,10 @@ public class GetRequest extends MyRequest{
     }
 
     public Request getRequest(){
+        builder.url(httpBuilder.build());
         return builder.build();
     }
+
 
 
 }
