@@ -2,7 +2,6 @@ package com.mintegral.detailroi.common.ids;
 
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Base64;
 
 import com.mbridge.msdk.thrid.okhttp.Request;
 import com.mintegral.detailroi.common.GlobalObject;
@@ -18,6 +17,8 @@ import org.json.JSONObject;
 public class BDIdsManager {
     private static String fxId;
     private static String backupId;
+    public static int failedNum = 0;
+    public static int MAX_FAILED_NUM = 3;
 
     public static void updateSelfId(){
         GetRequest getRequest = new GetRequest(NetworkConstant.SETTING_URL);
@@ -31,7 +32,7 @@ public class BDIdsManager {
 
             @Override
             protected void onFailed(String msg) {
-
+                failedNum++;
             }
 
             @Override

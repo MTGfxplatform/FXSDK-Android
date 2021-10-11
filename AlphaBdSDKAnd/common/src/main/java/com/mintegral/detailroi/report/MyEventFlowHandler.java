@@ -1,8 +1,11 @@
 package com.mintegral.detailroi.report;
 
+import static com.mintegral.detailroi.common.ids.BDIdsManager.MAX_FAILED_NUM;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +17,7 @@ import com.mintegral.detailroi.common.base.utils.SameLogTool;
 
 import com.mintegral.detailroi.common.db.CommonSDKDBHelper;
 import com.mintegral.detailroi.common.db.EventDao;
+import com.mintegral.detailroi.common.ids.BDIdsManager;
 import com.mintegral.detailroi.common.network.NetworkHelper;
 import com.mintegral.detailroi.common.network.callback.BaseCallBack;
 import com.mintegral.detailroi.common.network.request.PostRequest;
@@ -21,6 +25,7 @@ import com.mintegral.detailroi.common.network.request.PostRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 public class MyEventFlowHandler extends Handler {
@@ -94,7 +99,37 @@ public class MyEventFlowHandler extends Handler {
         }
         return jsonArray;
     }
+
+    private boolean checkFXID(){
+        boolean result = false;
+        String s = BDIdsManager.getFxId();
+        if(!TextUtils.isEmpty(s)){
+            result = true;
+        }
+        return result;
+    }
+    private JSONArray fillFXID(JSONArray jsonArray){
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String fx = jsonObject.optString("fx_id");
+                if(TextUtils.isEmpty(fx)){
+                    jsonObject.put("fx_id",BDIdsManager.getFxId());
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
     private void requestService(JSONArray eventList){
+        if(!checkFXID()){
+            BDIdsManager.updateSelfId();
+            if(BDIdsManager.failedNum < MAX_FAILED_NUM ){
+                return;
+            }
+        }
+        fillFXID(eventList);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("event_list",eventList);
