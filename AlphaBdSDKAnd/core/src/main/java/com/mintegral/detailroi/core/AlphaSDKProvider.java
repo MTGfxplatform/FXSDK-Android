@@ -1,6 +1,7 @@
 package com.mintegral.detailroi.core;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import com.mintegral.detailroi.common.BuildConfig;
 import com.mintegral.detailroi.common.GlobalObject;
@@ -13,7 +14,7 @@ import com.mintegral.detailroi.report.ReportManager;
 
 
 public class AlphaSDKProvider implements AlphaSDK{
-
+    private String tag = "AlphaSDK";
     public static boolean debugState = BuildConfig.DEBUG;
 
     @Override
@@ -34,7 +35,11 @@ public class AlphaSDKProvider implements AlphaSDK{
 
     @Override
     public void updateChannel(String channel) {
-        GlobalObject.channel = channel;
+        if (!TextUtils.isEmpty(channel) && !TextUtils.isEmpty(channel.trim()) ) {
+            GlobalObject.channel = channel;
+        }else {
+            SameLogTool.e(tag,"channel is error:"+channel);
+        }
 
     }
 
@@ -50,10 +55,11 @@ public class AlphaSDKProvider implements AlphaSDK{
     @Override
     public IUserEvent getUserEventManager() {
         try {
-            Class clz = Class.forName("com.mintegral.detailroi.event.out.UserEventManager");
+            Class.forName("com.mintegral.detailroi.event.out.UserEventManager");
             return UserEventManager.getInstance();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            SameLogTool.e(tag,"Event module can't find");
         }
         return null;
     }
