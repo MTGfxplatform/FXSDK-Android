@@ -4,7 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.mintegral.detailroi.common.bean.EventBean;
+
+import com.mintegral.detailroi.common.base.utils.SameLogTool;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 public class EventDao extends BaseDao{
 
+    private String tag = "EventDao";
         private static EventDao instance;
         private EventDao(CommonAbsDBHelper helper) {
             super(helper);
@@ -27,6 +29,36 @@ public class EventDao extends BaseDao{
             }
             return instance;
         }
+
+        public void updateReportStateByEventId(String eventId,int state){
+            if(getWritableDatabase() == null){
+                return;
+            }
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Table.E_REPORT_STATE,state);
+            getWritableDatabase().update(Table.TABLE_NAME,contentValues,Table.E_REPORT_STATE+ " = ?",new String[]{eventId});
+        }
+        public int queryReportStateByEventId(String eventId){
+            int result = 0;
+            if(getReadableDatabase() == null){
+                return result;
+            }
+            Cursor cursor = null;
+            try {
+                cursor = getReadableDatabase().query(Table.TABLE_NAME, new String[]{Table.E_EVENT_ID}, Table.E_EVENT_ID+" = ?", new String[]{eventId}, null, null, null);
+
+                if(cursor != null && !cursor.isClosed() && cursor.getCount() >0 ){
+                    result = cursor.getInt(cursor.getColumnIndex(Table.E_REPORT_STATE));
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                if(cursor != null && !cursor.isClosed()){
+                    cursor.close();
+                }
+            }
+                return result;
+            }
 
         public JSONArray queryAllEvent(){
             JSONArray jsonArray = null;
@@ -142,6 +174,13 @@ public class EventDao extends BaseDao{
                 cv.put(Table.E_IS_FIRST_DAY,jsonObject.optInt(Table.E_IS_FIRST_DAY));
                 cv.put(Table.E_DURATION,jsonObject.optLong(Table.E_DURATION));
                 cv.put(Table.E_LOG_COUNT,jsonObject.optInt(Table.E_LOG_COUNT));
+                int s = queryReportStateByEventId(jsonObject.optString(Table.E_EVENT_ID));
+                if(s == 0){
+                    cv.put(Table.E_REPORT_STATE,0);
+                }else {
+                    SameLogTool.e(tag,"event exist");
+                    return -1;
+                }
                 return getWritableDatabase().insert(Table.TABLE_NAME, null, cv);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -185,6 +224,7 @@ public class EventDao extends BaseDao{
         public static String E_TIME ="time";
         public static String E_DURATION = "duration";
         public static String E_LOG_COUNT = "log_count";
+        public static String E_REPORT_STATE = "report_state";
 
 
 
@@ -217,6 +257,7 @@ public class EventDao extends BaseDao{
                 + E_REFERER_PAGE_NAME +" TEXT,"
                 + E_REFERER_PAGE_TITLE +" TEXT,"
                 + E_EXT_PARAMS +" TEXT,"
+                + E_REPORT_STATE +" TEXT,"
 
 
                 + E_APP_VERSION_CODE +" INTEGER,"

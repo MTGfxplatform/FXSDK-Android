@@ -48,8 +48,13 @@ public class CommonSDKDBHelper extends CommonAbsDBHelper {
 
     @Override
     protected void onUpdateDB(SQLiteDatabase db, int oldVersion, int newVersion) {
-        dropTable(db);
+        renameTable(db);
         createTable(db);
+        if(oldVersion < newVersion){
+            transferData(db);
+        }
+        dropTableTemp(db);
+        dropTable(db);
     }
 
     private void createTable(SQLiteDatabase db) {
@@ -63,9 +68,40 @@ public class CommonSDKDBHelper extends CommonAbsDBHelper {
         }
     }
 
+    private void renameTable(SQLiteDatabase db){
+        try {
+            String tempTableName = EventDao.Table.TABLE_NAME + "_temp";
+            db.execSQL("ALTER TABLE  '" + EventDao.Table.TABLE_NAME + "'"+" RENAME TO "+tempTableName);
+        } catch (Exception e) {
+            if (CommonConstant.DEBUG_STATE) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void transferData(SQLiteDatabase db){
+        try {
+//            String tempTableName = EventDao.Table.TABLE_NAME + "_temp";
+//            db.execSQL("INSERT INTO  '" + EventDao.Table.TABLE_NAME + "'"+" RENAME TO "+tempTableName);
+        } catch (Exception e) {
+            if (CommonConstant.DEBUG_STATE) {
+                e.printStackTrace();
+            }
+        }
+    }
     private void dropTable(SQLiteDatabase db) {
         try {
             db.execSQL("DROP TABLE IF EXISTS '" + EventDao.Table.TABLE_NAME + "'");
+        } catch (Exception e) {
+            if (CommonConstant.DEBUG_STATE) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    private void dropTableTemp(SQLiteDatabase db) {
+        try {
+            String tempTableName = EventDao.Table.TABLE_NAME + "_temp";
+            db.execSQL("DROP TABLE IF EXISTS '" + tempTableName+ "'");
         } catch (Exception e) {
             if (CommonConstant.DEBUG_STATE) {
                 e.printStackTrace();

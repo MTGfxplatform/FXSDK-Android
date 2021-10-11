@@ -15,6 +15,7 @@ import com.mbridge.msdk.thrid.okhttp.RequestBody;
 import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
 
+import com.mintegral.detailroi.common.bean.EventBean;
 import com.mintegral.detailroi.common.db.CommonSDKDBHelper;
 import com.mintegral.detailroi.common.db.EventDao;
 import com.mintegral.detailroi.common.ids.BDIdsManager;
@@ -68,6 +69,26 @@ public class MyEventFlowHandler extends Handler {
             }
             if (eventDao != null) {
                 eventDao.insert(jsonObject);
+            }
+        }
+    }
+    private void updateReportStateToDB(JSONArray jsonArray,int state){
+        if(jsonArray == null){
+            return;
+        }
+        for (int i=0;i<jsonArray.length();i++) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(jsonObject == null){
+                continue;
+            }
+            if (eventDao != null) {
+                String eventId = jsonObject.optString("event_id");
+                eventDao.updateReportStateByEventId(eventId,state);
             }
         }
     }
@@ -138,12 +159,13 @@ public class MyEventFlowHandler extends Handler {
         }
         RequestBody requestBody = RequestBody.create(MediaType.get("application/json"),jsonObject.toString());
         Request request = new PostRequest().post(requestBody).getRequest();
-
+        updateReportStateToDB(eventList, EventBean.REPORT_STATE_REPORTING);
         NetworkHelper.getInstance().post(request,new BaseCallBack(){
 
             @Override
             protected void onFailed(String msg) {
                 SameLogTool.i("====",msg);
+                updateReportStateToDB(eventList, EventBean.REPORT_STATE_FAILED);
             }
 
             @Override
