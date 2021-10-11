@@ -4,11 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".EventActivity">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="iap"
         android:onClick="click"></Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="toDebugT"
+        android:onClick="toDebugT"></Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="toDebugF"
+        android:onClick="toDebugF"></Button>
 
 </LinearLayout>

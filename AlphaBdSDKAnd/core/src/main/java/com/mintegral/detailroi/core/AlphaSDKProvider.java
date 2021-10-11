@@ -15,7 +15,6 @@ import com.mintegral.detailroi.report.ReportManager;
 
 public class AlphaSDKProvider implements AlphaSDK{
     private String tag = "AlphaSDK";
-    public static boolean debugState = BuildConfig.DEBUG;
 
     @Override
     public void init(Application application, String channel,String appId) {
@@ -29,7 +28,6 @@ public class AlphaSDKProvider implements AlphaSDK{
 
     @Override
     public void enDebug(boolean debug) {
-        debugState = debug;
         SameLogTool.DBG_D = debug;
     }
 

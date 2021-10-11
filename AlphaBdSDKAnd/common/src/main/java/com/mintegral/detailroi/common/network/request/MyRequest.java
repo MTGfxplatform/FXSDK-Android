@@ -4,6 +4,6 @@ import com.mbridge.msdk.thrid.okhttp.Request;
 
 public class MyRequest {
     public void addCommonHeader(Request.Builder builder){
-        builder.addHeader("ceshi","7777");
+
     }
 }
