@@ -11,7 +11,7 @@ import com.mbridge.msdk.thrid.okhttp.Request;
 import com.mbridge.msdk.thrid.okhttp.RequestBody;
 import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
-import com.mintegral.detailroi.common.bean.EventBaseParams;
+
 import com.mintegral.detailroi.common.db.CommonSDKDBHelper;
 import com.mintegral.detailroi.common.db.EventDao;
 import com.mintegral.detailroi.common.network.NetworkHelper;
@@ -22,15 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MyEventFlowHandler extends Handler {
-    private static final int CHECK_BATCH_CACHE = 2;
+    private String tag = "MyEventFlowHandler";
+    public static final int CHECK_BATCH_CACHE = 2;
     public static final int INSERT_DB_THEN_REPORT = 1;
     private static final int INTERVAL_BATCH_CHECK_TIME = 5 * 1000;
 
-    private EventDao eventDao;
+    private final EventDao eventDao;
     public MyEventFlowHandler(Looper looper){
         super(looper);
         eventDao = EventDao.getInstance(CommonSDKDBHelper.getInstance(GlobalObject.application));
@@ -45,26 +44,59 @@ public class MyEventFlowHandler extends Handler {
                 requestService(jsonArray);
                 break;
             case CHECK_BATCH_CACHE:
-                //todo: 先查数据库缓存，
+                JSONArray jsonArray1 = queryAllDataInCache();
+                if (jsonArray1 != null && jsonArray1.length() >0) {
+                    requestService(jsonArray1);
+                }
                 sendEmptyMessageDelayed(CHECK_BATCH_CACHE,INTERVAL_BATCH_CHECK_TIME);
                 break;
         }
     }
 
     private void insertDataToDB(JSONArray jsonArray){
-
+        for (int i=0;i<jsonArray.length();i++) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (eventDao != null) {
+                eventDao.insert(jsonObject);
+            }
+        }
     }
-    private void deleteDataToDB(JSONArray eventList){
-
+    private void deleteDataToDB(JSONArray jsonArray){
+        if(jsonArray == null){
+         return;
+        }
+        for (int i=0;i<jsonArray.length();i++) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(jsonObject == null){
+                continue;
+            }
+            if (eventDao != null) {
+                String eventId = jsonObject.optString("event_id");
+                long result = eventDao.deleteRecordByEventId(eventId);
+                SameLogTool.i(tag,"delete db-  event_id:"+eventId+"-state:"+result);
+            }
+        }
     }
-    private List<String> queryAllDataInCache(){
-        return new ArrayList<String>(1);
+    private JSONArray queryAllDataInCache(){
+        JSONArray jsonArray = new JSONArray();
+        if (eventDao != null) {
+            jsonArray = eventDao.queryAllEvent();
+        }
+        return jsonArray;
     }
     private void requestService(JSONArray eventList){
         JSONObject jsonObject = new JSONObject();
-        EventBaseParams eventBaseParams = new EventBaseParams();
         try {
-            jsonObject.put("base", eventBaseParams.jsonObject);
             jsonObject.put("event_list",eventList);
         } catch (JSONException e) {
             e.printStackTrace();

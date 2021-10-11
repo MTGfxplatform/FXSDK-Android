@@ -46,7 +46,9 @@ public class ReportManager {
         handler.sendMessage(msg);
     }
 
-    public void insertEventToBatch(){
-
+    public void checkBatchReport(){
+        Message msg = handler.obtainMessage();
+        msg.what =MyEventFlowHandler.CHECK_BATCH_CACHE;
+        handler.sendMessage(msg);
     }
 }

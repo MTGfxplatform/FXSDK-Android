@@ -9,6 +9,7 @@ import com.mintegral.detailroi.common.base.utils.SameLogTool;
 import com.mintegral.detailroi.common.ids.BDIdsManager;
 import com.mintegral.detailroi.event.out.UserEventManager;
 import com.mintegral.detailroi.preset.PresetManager;
+import com.mintegral.detailroi.report.ReportManager;
 
 
 public class AlphaSDKProvider implements AlphaSDK{
@@ -22,7 +23,7 @@ public class AlphaSDKProvider implements AlphaSDK{
         BDIdsManager.updateSelfId();
         updateChannel(channel);
         initPresetModule();
-
+        ReportManager.getInstance().checkBatchReport();
     }
 
     @Override

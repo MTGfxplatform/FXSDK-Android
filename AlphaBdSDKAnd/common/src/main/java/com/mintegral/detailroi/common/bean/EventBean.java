@@ -21,7 +21,7 @@ public class EventBean extends IEventBean implements NoProguard {
             }
         }
         jsonObject = eventCommonParams.jsonObject;
-
+        jsonObject =EventBaseParams.addBaseParams(jsonObject);
     }
     public void setCustomEventJsonObject(JSONObject extJsonObject){
         try {

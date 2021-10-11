@@ -10,13 +10,14 @@ import com.mintegral.detailroi.common.ids.BDIdsManager;
 import com.mintegral.detailroi.common.ids.SessionIdsManager;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class EventBaseParams extends IEventBean implements NoProguard {
 
-    public EventBaseParams(){
-        init();
-    }
-    private void init(){
+    public static JSONObject addBaseParams(JSONObject jsonObject){
+        if(jsonObject == null){
+            return jsonObject;
+        }
         try {
             jsonObject.put("fx_id", BDIdsManager.getFxId());
             jsonObject.put("sdk_version", SDKConfig.SDK_VERSION);
@@ -45,7 +46,7 @@ public class EventBaseParams extends IEventBean implements NoProguard {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        return jsonObject;
     }
 
 
