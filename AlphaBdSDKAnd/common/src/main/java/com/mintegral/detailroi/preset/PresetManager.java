@@ -37,10 +37,17 @@ public class PresetManager implements Application.ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
+        updateAcInfo(activity);
         if(foreGroundAcNum==0){
             checkBackgroundTime();
         }
         foreGroundAcNum++;
+    }
+    private void updateAcInfo(Activity activity){
+        GlobalObject.refererAcTitle = GlobalObject.currentAcTitle;
+        GlobalObject.refererAcName = GlobalObject.currentAcName;
+        GlobalObject.currentAcName =activity.getClass().getName();
+        GlobalObject.currentAcTitle = activity.getTitle().toString();
     }
 
     @Override

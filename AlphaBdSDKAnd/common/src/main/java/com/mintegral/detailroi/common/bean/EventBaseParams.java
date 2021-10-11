@@ -25,6 +25,12 @@ public class EventBaseParams extends IEventBean implements NoProguard {
             jsonObject.put("app_id",GlobalObject.appId);
             jsonObject.put("app_name", SameDeviceTool.getAN(GlobalObject.application));
             jsonObject.put("package_name",SameDeviceTool.getPN(GlobalObject.application));
+
+            jsonObject.put("page_title",GlobalObject.currentAcTitle);
+            jsonObject.put("page_name",GlobalObject.currentAcName);
+            jsonObject.put("referer_page_title",GlobalObject.refererAcTitle);
+            jsonObject.put("referer_page_name",GlobalObject.refererAcName);
+
             jsonObject.put("platform",1);
             jsonObject.put("os_version",android.os.Build.VERSION.RELEASE);
             jsonObject.put("ua", SameDeviceTool.getDUA_UI());
