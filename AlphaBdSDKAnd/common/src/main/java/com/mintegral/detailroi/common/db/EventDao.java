@@ -68,7 +68,7 @@ public class EventDao extends BaseDao{
             }
             Cursor cursor = null;
             try {
-                cursor = getReadableDatabase().query(Table.TABLE_NAME,null,Table.E_REPORT_STATE+" = ?", new String[]{EventBean.REPORT_STATE_FAILED+""},null,null,null);
+                cursor = getReadableDatabase().query(Table.TABLE_NAME,null,Table.E_REPORT_STATE+" = ?", new String[]{EventBean.REPORT_STATE_FAILED+""},null,null,null,"100");
                 jsonArray = new JSONArray();
                 if(cursor != null && !cursor.isClosed() && cursor.getCount() >0 ){
                     while (cursor.moveToNext()){

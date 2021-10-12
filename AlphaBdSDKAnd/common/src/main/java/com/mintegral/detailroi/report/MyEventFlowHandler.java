@@ -54,7 +54,7 @@ public class MyEventFlowHandler extends Handler {
                 if (jsonArray1 != null && jsonArray1.length() >0) {
                     requestService(jsonArray1);
                 }
-                sendEmptyMessageDelayed(CHECK_BATCH_CACHE,INTERVAL_BATCH_CHECK_TIME);
+
                 break;
         }
     }
@@ -171,6 +171,7 @@ public class MyEventFlowHandler extends Handler {
             @Override
             public void onSucceed(JSONObject responseStr) {
                 deleteDataToDB(eventList);
+                sendEmptyMessage(CHECK_BATCH_CACHE);
             }
         });
     }
