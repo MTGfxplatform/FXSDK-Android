@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
+import com.mintegral.detailroi.common.bean.EventBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +37,7 @@ public class EventDao extends BaseDao{
             }
             ContentValues contentValues = new ContentValues();
             contentValues.put(Table.E_REPORT_STATE,state);
-            getWritableDatabase().update(Table.TABLE_NAME,contentValues,Table.E_REPORT_STATE+ " = ?",new String[]{eventId});
+            getWritableDatabase().update(Table.TABLE_NAME,contentValues,Table.E_EVENT_ID+ " = ?",new String[]{eventId});
         }
         public int queryReportStateByEventId(String eventId){
             int result = 0;
@@ -67,7 +68,7 @@ public class EventDao extends BaseDao{
             }
             Cursor cursor = null;
             try {
-                cursor = getReadableDatabase().query(Table.TABLE_NAME,null,null,null,null,null,null);
+                cursor = getReadableDatabase().query(Table.TABLE_NAME,null,Table.E_REPORT_STATE+" = ?", new String[]{EventBean.REPORT_STATE_FAILED+""},null,null,null);
                 jsonArray = new JSONArray();
                 if(cursor != null && !cursor.isClosed() && cursor.getCount() >0 ){
                     while (cursor.moveToNext()){

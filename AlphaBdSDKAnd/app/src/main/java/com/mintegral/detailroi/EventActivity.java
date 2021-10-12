@@ -19,7 +19,6 @@ public class EventActivity extends AppCompatActivity {
 
     }
     public void click(View view){
-        AlphaSDKFactory.getAlphaSDK().init(getApplication(),"channel_888","appid_12345");
         UserEventManager m = (UserEventManager) AlphaSDKFactory.getAlphaSDK().getUserEventManager();
         IAPEventBean iapEventBean = new IAPEventBean();
         iapEventBean.setAmount(1.0f);
@@ -30,22 +29,8 @@ public class EventActivity extends AppCompatActivity {
 
     public void toDebugT(View view){
         AlphaSDKFactory.getAlphaSDK().enDebug(true);
-        AlphaSDKFactory.getAlphaSDK().init(getApplication(),"channel_888","appid_12345");
-        UserEventManager m = (UserEventManager) AlphaSDKFactory.getAlphaSDK().getUserEventManager();
-        IAPEventBean iapEventBean = new IAPEventBean();
-        iapEventBean.setAmount(1.0f);
-        iapEventBean.setCurrency("ccc");
-        iapEventBean.setPayStatus(IAPPayStateEnum.success);
-        m.sendIAPEvent(iapEventBean);
     }
     public void toDebugF(View view){
         AlphaSDKFactory.getAlphaSDK().enDebug(false);
-        AlphaSDKFactory.getAlphaSDK().init(getApplication(),"channel_888","appid_12345");
-        UserEventManager m = (UserEventManager) AlphaSDKFactory.getAlphaSDK().getUserEventManager();
-        IAPEventBean iapEventBean = new IAPEventBean();
-        iapEventBean.setAmount(1.0f);
-        iapEventBean.setCurrency("ccc");
-        iapEventBean.setPayStatus(IAPPayStateEnum.success);
-        m.sendIAPEvent(iapEventBean);
     }
 }
