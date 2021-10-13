@@ -19,8 +19,13 @@ public class BDIdsManager {
     private static String backupId;
     public static int failedNum = 0;
     public static int MAX_FAILED_NUM = 3;
+    private static boolean isRequestingFXID;
 
     public static void updateSelfId(){
+        if(isRequestingFXID){
+            return;
+        }
+        isRequestingFXID = true;
         GetRequest getRequest = new GetRequest(NetworkConstant.SETTING_URL);
         getRequest.addQueryParameter("device_id", SameDeviceTool.getBase64DeviceIdsString());
         getRequest.addQueryParameter("fx_id",getFxId());
@@ -28,15 +33,19 @@ public class BDIdsManager {
         getRequest.addQueryParameter("upt", SystemClock.elapsedRealtime()+"");
         getRequest.addQueryParameter("platform","1");
         Request request = getRequest.getRequest();
+
         NetworkHelper.getInstance().get(request,new BaseCallBack(){
 
             @Override
             protected void onFailed(String msg) {
                 failedNum++;
+                isRequestingFXID =false;
             }
 
             @Override
             public void onSucceed(JSONObject responseJsonObj) {
+                failedNum = 0;
+                isRequestingFXID =false;
                 if(responseJsonObj != null){
                     fxId = responseJsonObj.optString("fx_id");
                     backupId = responseJsonObj.optString("backup_id");
