@@ -33,7 +33,7 @@ public class MyEventFlowHandler extends Handler {
     private String tag = "MyEventFlowHandler";
     public static final int CHECK_BATCH_CACHE = 2;
     public static final int INSERT_DB_THEN_REPORT = 1;
-    private static final int INTERVAL_BATCH_CHECK_TIME = 5 * 1000;
+    private static final int REPORT_WAIT_TIME = 2 * 60 * 1000;
 
     private final EventDao eventDao;
     public MyEventFlowHandler(Looper looper){
@@ -116,7 +116,7 @@ public class MyEventFlowHandler extends Handler {
     private JSONArray queryAllDataInCache(){
         JSONArray jsonArray = new JSONArray();
         if (eventDao != null) {
-            jsonArray = eventDao.queryAllEvent();
+            jsonArray = eventDao.queryAllEvent(REPORT_WAIT_TIME);
         }
         return jsonArray;
     }
@@ -164,7 +164,7 @@ public class MyEventFlowHandler extends Handler {
 
             @Override
             protected void onFailed(String msg) {
-                SameLogTool.i("====",msg);
+                SameLogTool.d(tag,msg);
                 updateReportStateToDB(eventList, EventBean.REPORT_STATE_FAILED);
             }
 

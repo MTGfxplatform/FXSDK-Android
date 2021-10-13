@@ -61,14 +61,16 @@ public class EventDao extends BaseDao{
                 return result;
             }
 
-        public JSONArray queryAllEvent(){
+        public JSONArray queryAllEvent(long reportWaitTime){
             JSONArray jsonArray = null;
             if(getReadableDatabase() == null){
                 return jsonArray;
             }
             Cursor cursor = null;
             try {
-                cursor = getReadableDatabase().query(Table.TABLE_NAME,null,Table.E_REPORT_STATE+" = ?", new String[]{EventBean.REPORT_STATE_FAILED+""},null,null,null,"100");
+                long current = System.currentTimeMillis();
+                long timePoint=current - reportWaitTime;
+                cursor = getReadableDatabase().query(Table.TABLE_NAME,null,Table.E_REPORT_STATE+" = ?" + " OR "+Table.E_REPORT_STATE+" = ?"+ " OR ("+Table.E_REPORT_STATE+" = ?" +" AND "+Table.E_TIME +" < ? )", new String[]{EventBean.REPORT_STATE_FAILED+"",EventBean.REPORT_STATE_DEFAULT+"",EventBean.REPORT_STATE_REPORTING+"",timePoint+""},null,null,null,"100");
                 jsonArray = new JSONArray();
                 if(cursor != null && !cursor.isClosed() && cursor.getCount() >0 ){
                     while (cursor.moveToNext()){
