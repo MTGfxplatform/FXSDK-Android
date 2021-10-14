@@ -137,6 +137,10 @@ public class MyEventFlowHandler extends Handler {
                 if(TextUtils.isEmpty(fx)){
                     jsonObject.put("fx_id",BDIdsManager.getFxId());
                 }
+                String appID = jsonObject.optString("app_id");
+                if(TextUtils.isEmpty(appID)){
+                    jsonObject.put("app_id",GlobalObject.appId);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -147,8 +151,13 @@ public class MyEventFlowHandler extends Handler {
         if(!checkFXID()){
             BDIdsManager.updateSelfId();
             if(BDIdsManager.failedNum < MAX_FAILED_NUM ){
+                SameLogTool.e(tag,"fx_id is null,we will retry request,events are cached");
                 return;
             }
+        }
+        if(TextUtils.isEmpty(GlobalObject.appId)){
+            SameLogTool.e(tag,"app_id is "+GlobalObject.appId +", so it can't report");
+            return;
         }
         fillFXID(eventList);
         JSONObject jsonObject = new JSONObject();
