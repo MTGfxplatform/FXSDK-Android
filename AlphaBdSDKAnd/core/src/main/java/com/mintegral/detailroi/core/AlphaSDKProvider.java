@@ -30,7 +30,7 @@ public class AlphaSDKProvider implements AlphaSDK{
         GlobalObject.application = application;
         GlobalObject.appId = appId;
         BDIdsManager.updateSelfId();
-        updateChannel(channel);
+        setChannel(channel);
         initPresetModule();
         ReportManager.getInstance().checkBatchReport();
         initComplete = true;
@@ -51,12 +51,15 @@ public class AlphaSDKProvider implements AlphaSDK{
             SameLogTool.e(tag,"alpha sdk not init,please init it before do other things");
             return;
         }
+        setChannel(channel);
+    }
+
+    private void setChannel(String channel){
         if (!TextUtils.isEmpty(channel) && !TextUtils.isEmpty(channel.trim()) ) {
             GlobalObject.channel = channel;
         }else {
             SameLogTool.e(tag,"channel is error:"+channel);
         }
-
     }
 
     private void initPresetModule(){
