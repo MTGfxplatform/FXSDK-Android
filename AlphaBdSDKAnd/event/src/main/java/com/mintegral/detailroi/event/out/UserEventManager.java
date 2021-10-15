@@ -21,7 +21,7 @@ public class UserEventManager implements IUserEvent {
     }
 
     @Override
-    public void sendCustomEvent(String name, JSONObject jsonObject) {
+    public void track(String name, JSONObject jsonObject) {
         EventCommonParams eventCommonParams = new EventCommonParams(name,System.currentTimeMillis());
         EventBean eventBean = new EventBean();
         eventBean.setCustomEventJsonObject(jsonObject);
