@@ -77,7 +77,7 @@ public class IAPEventBean extends IEventBussBean implements NoProguard {
     public void setPayStatus(IAPPayStateEnum payStatus) {
         this.payStatus = payStatus;
         try {
-            jsonObject.put("payStatus",payStatus.getState());
+            jsonObject.put("paystatus",payStatus.getState());
         } catch (JSONException e) {
             e.printStackTrace();
         }
