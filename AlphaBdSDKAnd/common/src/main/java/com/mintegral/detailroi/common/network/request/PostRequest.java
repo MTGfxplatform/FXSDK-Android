@@ -2,8 +2,8 @@ package com.mintegral.detailroi.common.network.request;
 
 import static com.mintegral.detailroi.common.network.NetworkConstant.REPORT_URL;
 
-import com.mbridge.msdk.thrid.okhttp.Request;
-import com.mbridge.msdk.thrid.okhttp.RequestBody;
+import com.mbridge.alpha.thrid.okhttp.Request;
+import com.mbridge.alpha.thrid.okhttp.RequestBody;
 
 public class PostRequest extends MyRequest{
     Request.Builder builder;

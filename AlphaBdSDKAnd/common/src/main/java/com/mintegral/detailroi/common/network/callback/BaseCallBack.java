@@ -2,9 +2,9 @@ package com.mintegral.detailroi.common.network.callback;
 
 import android.text.TextUtils;
 
-import com.mbridge.msdk.thrid.okhttp.Call;
-import com.mbridge.msdk.thrid.okhttp.Callback;
-import com.mbridge.msdk.thrid.okhttp.Response;
+import com.mbridge.alpha.thrid.okhttp.Call;
+import com.mbridge.alpha.thrid.okhttp.Callback;
+import com.mbridge.alpha.thrid.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;

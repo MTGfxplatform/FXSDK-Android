@@ -9,9 +9,9 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import com.mbridge.msdk.thrid.okhttp.MediaType;
-import com.mbridge.msdk.thrid.okhttp.Request;
-import com.mbridge.msdk.thrid.okhttp.RequestBody;
+import com.mbridge.alpha.thrid.okhttp.MediaType;
+import com.mbridge.alpha.thrid.okhttp.Request;
+import com.mbridge.alpha.thrid.okhttp.RequestBody;
 import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
 
@@ -26,7 +26,7 @@ import com.mintegral.detailroi.common.network.request.PostRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
 
 
 public class MyEventFlowHandler extends Handler {

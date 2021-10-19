@@ -1,10 +1,10 @@
 package com.mintegral.detailroi.common.network;
 
-import com.mbridge.msdk.thrid.okhttp.Call;
-import com.mbridge.msdk.thrid.okhttp.Callback;
-import com.mbridge.msdk.thrid.okhttp.OkHttpClient;
-import com.mbridge.msdk.thrid.okhttp.Request;
-import com.mbridge.msdk.thrid.okhttp.RequestBody;
+import com.mbridge.alpha.thrid.okhttp.Call;
+import com.mbridge.alpha.thrid.okhttp.Callback;
+import com.mbridge.alpha.thrid.okhttp.OkHttpClient;
+import com.mbridge.alpha.thrid.okhttp.Request;
+import com.mbridge.alpha.thrid.okhttp.RequestBody;
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
 import com.mintegral.detailroi.common.network.interceptor.NetworkLogInterceptor;
 

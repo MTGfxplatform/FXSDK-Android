@@ -39,5 +39,10 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    api ('com.google.code.findbugs:annotations:3.0.1'){
+        exclude module: 'jsr305'
+        exclude module: 'jcip-annotations'
+    }
+    api 'org.conscrypt:conscrypt-openjdk-uber:2.2.1'
 }
-apply from: '../UploadJcenter.gradle'
+//apply from: '../UploadJcenter.gradle'

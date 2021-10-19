@@ -1,15 +1,15 @@
 package com.mintegral.detailroi.common.network.interceptor;
 
-import static com.mbridge.msdk.thrid.okhttp.internal.Util.UTF_8;
+import static com.mbridge.alpha.thrid.okhttp.internal.Util.UTF_8;
 
-import com.mbridge.msdk.thrid.okhttp.Interceptor;
-import com.mbridge.msdk.thrid.okhttp.MediaType;
-import com.mbridge.msdk.thrid.okhttp.Request;
-import com.mbridge.msdk.thrid.okhttp.RequestBody;
-import com.mbridge.msdk.thrid.okhttp.Response;
-import com.mbridge.msdk.thrid.okhttp.ResponseBody;
-import com.mbridge.msdk.thrid.okio.Buffer;
-import com.mbridge.msdk.thrid.okio.BufferedSource;
+import com.mbridge.alpha.thrid.okhttp.Interceptor;
+import com.mbridge.alpha.thrid.okhttp.MediaType;
+import com.mbridge.alpha.thrid.okhttp.Request;
+import com.mbridge.alpha.thrid.okhttp.RequestBody;
+import com.mbridge.alpha.thrid.okhttp.Response;
+import com.mbridge.alpha.thrid.okhttp.ResponseBody;
+import com.mbridge.alpha.thrid.okio.Buffer;
+import com.mbridge.alpha.thrid.okio.BufferedSource;
 import com.mintegral.detailroi.common.base.utils.SameLogTool;
 
 import java.io.IOException;

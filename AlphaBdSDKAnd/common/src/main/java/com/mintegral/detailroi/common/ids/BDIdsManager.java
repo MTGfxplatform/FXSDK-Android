@@ -3,7 +3,7 @@ package com.mintegral.detailroi.common.ids;
 import android.os.SystemClock;
 import android.text.TextUtils;
 
-import com.mbridge.msdk.thrid.okhttp.Request;
+import com.mbridge.alpha.thrid.okhttp.Request;
 import com.mintegral.detailroi.common.GlobalObject;
 import com.mintegral.detailroi.common.base.utils.SameDeviceTool;
 import com.mintegral.detailroi.common.base.utils.SharedPreferencesUtils;
