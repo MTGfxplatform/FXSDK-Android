@@ -1,0 +1,90 @@
+import java.util.stream.Node
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+
+group = "com.mintegral.detailroi"	// 所在组
+version = '15.4.11'
+def siteUrl = 'http://detailroi.mintegral.com' // 项目主页
+def gitUrl = 'https://github.com/Mintegral-official/MintegralAdSDK-Android.git' // 项目的git地址
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+afterEvaluate {
+    publishing {
+        repositories {
+            def Nexususername = properties.getProperty("Nexus.name")
+            def Nexuspassword = properties.getProperty("Nexus.password")
+            maven{
+                name = "mtg_inner_oversea_release_repo"
+                url="http://maven-android.mintegral.com/repository/alpha_detailroi_and_sdk_common/"
+                // 仓库用户名密码
+                credentials {
+                    username = Nexususername
+                    password = Nexuspassword
+                }
+            }
+//            maven{
+//                name = "mtg_inner_oversea_snapshot_repo"
+//                url = "http://maven.inner.mobvista.com/repository/mbridge_android_sdk_for_oversea_in_test/"
+//                // 仓库用户名密码
+//                credentials {
+//                    username = Nexususername
+//                    password = Nexuspassword
+//                }
+//            }
+
+        }
+        publications {
+            // Creates a Maven publication called "release".
+            overseaRelease(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.overseaRelease
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.mintegral.detailroi'
+                artifactId = project.name
+                pom.withXml{
+                    Node pomNode = asNode()
+                    pomNode.dependencies.'*'.findAll() {
+
+                    }
+                }
+                pom {
+                    name = artifactId
+                    url = siteUrl
+                    licenses {
+                        //证书说明
+                        license {
+                            name='The Apache Software License, Version 2.0' // 开源协议名称
+                            url='http://www.apache.org/licenses/LICENSE-2.0.txt' // 协议地址
+                        }
+                    }
+                    developers {
+                        developer {
+                            id='mintegral-official'	// 账号
+                            name='mintegral'	// 名称
+                            email='hr@mintegral.com' // 邮箱地址
+                        }
+                    }
+                    //软件配置管理
+                    scm {
+                        connection=gitUrl
+                        developerConnection=gitUrl
+                        url=siteUrl
+                    }
+                }
+            }
+
+        }
+        }
+    }
+
+
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+
