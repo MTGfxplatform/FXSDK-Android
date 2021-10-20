@@ -38,7 +38,7 @@ public class CommonSDKDBHelper extends CommonAbsDBHelper {
     @Override
 
     protected int getDBVersion() {
-        return SDKConfig.SDK_VERSION_DB;
+        return SDKConfig.SDK_DB_VERSION;
     }
 
     @Override

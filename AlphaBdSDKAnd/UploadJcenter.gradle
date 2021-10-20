@@ -1,11 +1,10 @@
-import java.util.stream.Node
-
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 
 group = "com.mintegral.detailroi"	// 所在组
-version = '15.4.11'
+version = getVersion()
 def siteUrl = 'http://detailroi.mintegral.com' // 项目主页
 def gitUrl = 'https://github.com/Mintegral-official/MintegralAdSDK-Android.git' // 项目的git地址
 Properties properties = new Properties()
@@ -37,9 +36,9 @@ afterEvaluate {
         }
         publications {
             // Creates a Maven publication called "release".
-            overseaRelease(MavenPublication) {
+            release(MavenPublication) {
                 // Applies the component for the release build variant.
-                from components.overseaRelease
+                from components.release
 
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.mintegral.detailroi'
@@ -62,9 +61,9 @@ afterEvaluate {
                     }
                     developers {
                         developer {
-                            id='mintegral-official'	// 账号
-                            name='mintegral'	// 名称
-                            email='hr@mintegral.com' // 邮箱地址
+                            id='sarige'	// 账号
+                            name='sarige'	// 名称
+                            email='junjun.song@mintegral.com' // 邮箱地址
                         }
                     }
                     //软件配置管理
@@ -81,7 +80,29 @@ afterEvaluate {
     }
 
 
+def getVersion(){
+    def path = rootProject.project(":common").getProjectDir().absolutePath + '/src/main/java/com/mintegral/detailroi/common/base/SDKConfig.java'
 
+    def version = "1.0.0"
+    String readerString = path
+    if (path) {
+        new File(path).withReader('UTF-8') { reader ->
+            reader.eachLine {
+                //读取一行，如果发现有"VERSION"字符，说明是我们要修改的那一行。
+                if (it.contains("SDK_VERSION")) {
+                    //保存it到string，然后返回
+                    readerString <<= it
+                    String[] str = readerString.split("\"")
+                    version =  str[1].split("\"")[0]
+                    return version
+                }
+            }
+            return version
+        }
+    }else{
+        return version
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.4'

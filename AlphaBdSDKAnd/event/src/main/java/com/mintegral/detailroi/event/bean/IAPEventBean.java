@@ -1,14 +1,11 @@
 package com.mintegral.detailroi.event.bean;
 
-import androidx.annotation.NonNull;
-
 import com.mintegral.detailroi.common.able.IEventBussBean;
 import com.mintegral.detailroi.common.base.NoProguard;
 import com.mintegral.detailroi.event.out.IAPPayStateEnum;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
