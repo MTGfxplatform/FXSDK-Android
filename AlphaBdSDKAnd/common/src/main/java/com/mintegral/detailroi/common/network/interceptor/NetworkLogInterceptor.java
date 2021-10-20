@@ -69,6 +69,9 @@ public class NetworkLogInterceptor implements Interceptor {
         if (contentType != null) {
             charset = contentType.charset();
         }
+        if(charset == null){
+            charset = UTF_8;
+        }
         if (contentLength != 0) {
             String result = buffer.clone().readString(charset);
             SameLogTool.d(TAG, "Response: " + result);
