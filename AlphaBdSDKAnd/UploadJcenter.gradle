@@ -15,7 +15,8 @@ afterEvaluate {
             def Nexususername = properties.getProperty("Nexus.name")
             def Nexuspassword = properties.getProperty("Nexus.password")
             maven{
-                name = "mtg_inner_oversea_release_repo"
+                allowInsecureProtocol = true
+                name = "sdk_release_repo"
                 url="http://maven-android.mintegral.com/repository/alpha_detailroi_and_sdk_common/"
                 // 仓库用户名密码
                 credentials {
