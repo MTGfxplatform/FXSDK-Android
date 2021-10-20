@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 
-group = "com.mintegral.detailroi"	// 所在组
+group = "com.fxmvp.detailroi"	// 所在组
 version = getVersion()
 def siteUrl = 'http://detailroi.mintegral.com' // 项目主页
 def gitUrl = 'https://github.com/Mintegral-official/MintegralAdSDK-Android.git' // 项目的git地址
@@ -42,7 +42,7 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.mintegral.detailroi'
+                groupId = 'com.fxmvp.detailroi'
                 artifactId = project.name
                 pom.withXml{
                     Node pomNode = asNode()
@@ -82,7 +82,7 @@ afterEvaluate {
 
 
 def getVersion(){
-    def path = rootProject.project(":common").getProjectDir().absolutePath + '/src/main/java/com/mintegral/detailroi/common/base/SDKConfig.java'
+    def path = rootProject.project(":common").getProjectDir().absolutePath + '/src/main/java/com/fxmvp/detailroi/common/base/SDKConfig.java'
 
     def version = "1.0.0"
     String readerString = path
