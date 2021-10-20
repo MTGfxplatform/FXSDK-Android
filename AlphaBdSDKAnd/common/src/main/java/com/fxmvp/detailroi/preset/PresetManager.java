@@ -96,6 +96,7 @@ public class PresetManager implements Application.ActivityLifecycleCallbacks {
     private void init() {
         SessionIdsManager.createSessionId();
         checkBackgroundTime();
+        foreGroundAcNum--;
         mApplication.registerActivityLifecycleCallbacks(this);
         SameLogTool.d(tag, "preset module init ok");
         checkInstallState();
