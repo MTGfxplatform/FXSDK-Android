@@ -29,8 +29,10 @@ public class BDIdsManager {
         GetRequest getRequest = new GetRequest(NetworkConstant.SETTING_URL);
         getRequest.addQueryParameter("device_id", SameDeviceTool.getBase64DeviceIdsString());
         getRequest.addQueryParameter("fx_id",getFxId());
-        getRequest.addQueryParameter("out",System.currentTimeMillis()+"");
-        getRequest.addQueryParameter("upt", SystemClock.elapsedRealtime()+"");
+        long currentTime = System.currentTimeMillis();
+        getRequest.addQueryParameter("out",currentTime+"");
+        long startTime = currentTime - SystemClock.elapsedRealtime();
+        getRequest.addQueryParameter("upt", startTime+"");
         getRequest.addQueryParameter("platform","1");
         Request request = getRequest.getRequest();
 
