@@ -40,9 +40,10 @@ public class PresetManager implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
         updateAcInfo(activity);
-        if (foreGroundAcNum <= 0) {
-            foreGroundAcNum = 0;
+        if (foreGroundAcNum == 0) {
             checkBackgroundTime();
+        }else if(foreGroundAcNum < 0){
+            foreGroundAcNum = 0;
         }
         foreGroundAcNum++;
     }
@@ -80,7 +81,7 @@ public class PresetManager implements Application.ActivityLifecycleCallbacks {
 
 
     private static class Holder {
-        private static PresetManager presetManager = new PresetManager();
+        private static final PresetManager presetManager = new PresetManager();
     }
 
     public static PresetManager getInstance() {
@@ -94,6 +95,7 @@ public class PresetManager implements Application.ActivityLifecycleCallbacks {
 
     private void init() {
         SessionIdsManager.createSessionId();
+        checkBackgroundTime();
         mApplication.registerActivityLifecycleCallbacks(this);
         SameLogTool.d(tag, "preset module init ok");
         checkInstallState();
