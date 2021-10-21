@@ -6,7 +6,7 @@ apply plugin: 'com.jfrog.bintray'
 group = "com.fxmvp.detailroi"	// 所在组
 version = getVersion()
 def siteUrl = 'http://detailroi.mintegral.com' // 项目主页
-def gitUrl = 'https://github.com/Mintegral-official/MintegralAdSDK-Android.git' // 项目的git地址
+def gitUrl = 'https://github.com/MTGfxplatform/FXSDK-Android.git' // 项目的git地址
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 afterEvaluate {
