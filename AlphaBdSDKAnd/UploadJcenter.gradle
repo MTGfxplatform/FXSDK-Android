@@ -47,7 +47,7 @@ afterEvaluate {
                 pom.withXml{
                     Node pomNode = asNode()
                     pomNode.dependencies.'*'.findAll() {
-
+                        it.parent().remove(it)
                     }
                 }
                 pom {
